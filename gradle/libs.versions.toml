@@ -4,6 +4,7 @@ appcompatVersion = "1.6.1"
 ccp = "2.6.1"
 constraintlayoutVersion = "2.1.4"
 firebaseBom = "33.12.0"
+firebaseUiFirestore = "9.0.0"
 googleFirebaseBom = "31.3.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -26,6 +27,7 @@ constraintlayout-v214 = { module = "androidx.constraintlayout:constraintlayout",
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-bom-v3130 = { module = "com.google.firebase:firebase-bom", version.ref = "googleFirebaseBom" }
+firebase-ui-firestore = { module = "com.firebaseui:firebase-ui-firestore", version.ref = "firebaseUiFirestore" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
