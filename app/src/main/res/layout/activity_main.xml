@@ -33,7 +33,6 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/icon_search"
             app:tint="@color/white"
-
             />
 
     </RelativeLayout>

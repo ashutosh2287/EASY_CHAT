@@ -80,7 +80,7 @@ public class LoginUsernameActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 setInProgress(false);
                 if(task.isSuccessful()){
-                    userModel =    task.getResult().toObject(UserModel.class);
+                     userModel =task.getResult().toObject(UserModel.class);
                     if(userModel!=null){
                         usernameInput.setText(userModel.getUsername());
                     }

@@ -3,6 +3,7 @@ package com.chatterbox.easychat.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +25,18 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
 
     Context context;
 
-    public SearchUserRecyclerAdapter(@NonNull FirestoreRecyclerOptions<UserModel> options,Context context) {
+    public SearchUserRecyclerAdapter(@NonNull FirestoreRecyclerOptions<UserModel>options,Context context) {
         super(options);
         this.context = context;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull UserModelViewHolder holder, int position, @NonNull UserModel model) {
+        Log.d("SearchDebug", "Found user: " + model.getUsername());
         holder.usernameText.setText(model.getUsername());
         holder.phoneText.setText(model.getPhone());
-        if(model.getUserid().equals(FirebaseUtil.currentUserId())){
+        if(model.getUserid() != null && model.getUserid().equals(FirebaseUtil.currentUserId()))
+        {
             holder.usernameText.setText(model.getUsername()+" (Me)");
         }
 
