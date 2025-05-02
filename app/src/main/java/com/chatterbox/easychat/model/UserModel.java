@@ -1,25 +1,32 @@
 package com.chatterbox.easychat.model;
 
+import com.chatterbox.easychat.utils.AndroidUtil;
+import com.chatterbox.easychat.utils.FirebaseUtil;
 import com.google.firebase.Timestamp;
+import android.content.Context;
 
 public class UserModel {
     private String phone;
     private String username;
     private Timestamp createdTimestamp;
-    private String userid;
+    private String userId;
+    private String fcmToken;
+    private String profilePic;  // Profile picture URL
 
+    // Default constructor
     public UserModel() {
     }
 
-    public UserModel(String phone, String username, Timestamp createdTimestamp,String userid) {
+    // Constructor with user details
+    public UserModel(String phone, String username, Timestamp createdTimestamp, String userId) {
         this.phone = phone;
         this.username = username;
         this.createdTimestamp = createdTimestamp;
-        this.userid= userid;
+        this.userId = userId;
+        this.profilePic = "profilePics/default_profile_pic.png"; // Default profile picture
     }
 
-
-
+    // Getters and Setters
     public String getPhone() {
         return phone;
     }
@@ -44,11 +51,42 @@ public class UserModel {
         this.createdTimestamp = createdTimestamp;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    // Method to update profile picture in Firestore
+    public void updateProfilePictureInFirestore(Context context, String imageUrl) {
+        this.profilePic = imageUrl; // Update profile picture URL
+
+        // Update Firestore with the new profile picture URL
+        FirebaseUtil.currentUserDetails().set(this)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        AndroidUtil.showToast(context, "Profile picture updated successfully");
+                    } else {
+                        AndroidUtil.showToast(context, "Failed to update profile picture");
+                    }
+                });
     }
 }

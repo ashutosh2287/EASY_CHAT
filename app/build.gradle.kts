@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
-
 }
 
 android {
@@ -27,6 +26,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -34,29 +34,29 @@ android {
 }
 
 dependencies {
+    // Firebase BoM to automatically manage versions
+    implementation(platform(libs.firebase.bom.v3270))
 
+    // Firebase modules (these will now automatically use compatible versions from the BoM)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.ui.firestore)
+    implementation(libs.firebase.auth)
+    implementation (libs.firebase.storage.v2000)
+    implementation (libs.firebase.auth.v2100)
+
+    // Your existing libraries
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.firestore)
-    implementation(libs.com.google.firebase.firebase.auth2)
+    implementation(libs.ccp)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(libs.ccp)
-    implementation (platform(libs.firebase.bom.v3130))
-
-    implementation(libs.firebase.auth)
-    implementation(libs.google.firebase.auth)
-    implementation (libs.firebase.ui.firestore)
-
-
-
-
-
-
-
-
+    implementation (libs.integrity)
+    implementation (libs.glide.v4151)  // Make sure to use the latest version
+    annotationProcessor (libs.compiler)
 
 }

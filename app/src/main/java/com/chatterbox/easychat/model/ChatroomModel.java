@@ -1,7 +1,6 @@
 package com.chatterbox.easychat.model;
 
 import com.google.firebase.Timestamp;
-
 import java.util.List;
 
 public class ChatroomModel {
@@ -10,15 +9,27 @@ public class ChatroomModel {
     Timestamp lastMessageTimestamp;
     String lastMessageSenderId;
     String lastMessage;
+    private String otherUserProfilePic;
+    private String otherUserName;
+
 
     public ChatroomModel() {
     }
 
-    public ChatroomModel(String chatroomId, List<String> userIds, Timestamp lastMessageTimestamp, String lastMessageSenderId) {
+    public ChatroomModel(String chatroomId, List<String> userIds, Timestamp lastMessageTimestamp, String lastMessageSenderId, String lastMessage) {
         this.chatroomId = chatroomId;
         this.userIds = userIds;
         this.lastMessageTimestamp = lastMessageTimestamp;
         this.lastMessageSenderId = lastMessageSenderId;
+        this.lastMessage = lastMessage;
+    }
+
+    public ChatroomModel(String chatroomId, List<String> userIds, Timestamp lastMessageTimestamp, String lastMessage) {
+        this.chatroomId = chatroomId;
+        this.userIds = userIds;
+        this.lastMessageTimestamp = lastMessageTimestamp;
+        this.lastMessageSenderId = null;  // optional for first time
+        this.lastMessage = lastMessage;
     }
 
     public String getChatroomId() {
@@ -60,4 +71,21 @@ public class ChatroomModel {
     public void setLastMessage(String lastMessage) {
         this.lastMessage = lastMessage;
     }
+    public String getOtherUserProfilePic() {
+        return otherUserProfilePic;
+    }
+
+    public void setOtherUserProfilePic(String otherUserProfilePic) {
+        this.otherUserProfilePic = otherUserProfilePic;
+    }
+
+    public String getOtherUserName() {
+        return otherUserName;
+    }
+
+    public void setOtherUserName(String otherUserName) {
+        this.otherUserName = otherUserName;
+    }
+
 }
+

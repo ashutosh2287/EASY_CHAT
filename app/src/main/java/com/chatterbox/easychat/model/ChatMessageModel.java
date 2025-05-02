@@ -3,7 +3,6 @@ package com.chatterbox.easychat.model;
 import com.google.firebase.Timestamp;
 
 public class ChatMessageModel {
-
     private String message;
     private String senderId;
     private Timestamp timestamp;

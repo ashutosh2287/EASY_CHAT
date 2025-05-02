@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chatterbox.easychat.R;
 import com.chatterbox.easychat.utils.AndroidUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,12 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -127,7 +121,7 @@ public class LoginOtpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 setInProgress(false);
                 if(task.isSuccessful()){
-                    Intent intent = new Intent(LoginOtpActivity.this,com.chatterbox.easychat.LoginUsernameActivity.class);
+                    Intent intent = new Intent(LoginOtpActivity.this,LoginUsernameActivity.class);
                     intent.putExtra("phone",phoneNumber);
                     startActivity(intent);
                 }else{

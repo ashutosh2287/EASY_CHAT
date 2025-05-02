@@ -3,6 +3,7 @@ package com.chatterbox.easychat.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.chatterbox.easychat.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import java.util.Objects;
+
 public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatroomModel, RecentChatRecyclerAdapter.ChatroomModelViewHolder> {
 
     Context context;
@@ -37,22 +40,22 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
                     if(task.isSuccessful()){
                         boolean lastMessageSentByMe = model.getLastMessageSenderId().equals(FirebaseUtil.currentUserId());
 
-
                         UserModel otherUserModel = task.getResult().toObject(UserModel.class);
 
+                        // Step 1: Add a check for null or empty userId
 
 
                         holder.usernameText.setText(otherUserModel.getUsername());
-                        if(lastMessageSentByMe)
-                            holder.lastMessageText.setText("You : "+model.getLastMessage());
+                        if (lastMessageSentByMe)
+                            holder.lastMessageText.setText("You : " + model.getLastMessage());
                         else
                             holder.lastMessageText.setText(model.getLastMessage());
                         holder.lastMessageTime.setText(FirebaseUtil.timestampToString(model.getLastMessageTimestamp()));
 
                         holder.itemView.setOnClickListener(v -> {
-                            //navigate to chat activity
+                            // Navigate to chat activity
                             Intent intent = new Intent(context, ChatActivity.class);
-                            AndroidUtil.passUserModelAsIntent(intent,otherUserModel);
+                            AndroidUtil.passUserModelAsIntent(intent, otherUserModel);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                         });
@@ -64,11 +67,11 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
     @NonNull
     @Override
     public ChatroomModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recent_chat_recycler_row,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recent_chat_recycler_row, parent, false);
         return new ChatroomModelViewHolder(view);
     }
 
-    class ChatroomModelViewHolder extends RecyclerView.ViewHolder{
+    static class ChatroomModelViewHolder extends RecyclerView.ViewHolder {
         TextView usernameText;
         TextView lastMessageText;
         TextView lastMessageTime;

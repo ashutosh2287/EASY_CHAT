@@ -24,16 +24,14 @@
             android:text="Username"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
 
         <include android:id="@+id/profile_pic_layout"
             layout="@layout/profile_pic_view"
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:layout_marginStart="10dp"
-            android:layout_toRightOf="@id/back_btn"
-            />
+            android:layout_toRightOf="@id/back_btn" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -51,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_layout"
-        android:layout_below="@id/toolbar"/>
+        android:layout_below="@id/toolbar" />
 
     <RelativeLayout
         android:id="@+id/bottom_layout"
@@ -85,10 +83,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:src="@drawable/icon_send"
-            app:tint="@color/my_secondary"
-            />
+            app:tint="@color/my_secondary" />
 
     </RelativeLayout>
-
-
 </RelativeLayout>

@@ -19,6 +19,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
 public class SearchUserActivity extends AppCompatActivity {
+
     EditText searchInput;
     ImageButton searchButton;
     ImageButton backButton;
@@ -29,13 +30,8 @@ public class SearchUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search_user);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
         searchInput = findViewById(R.id.seach_username_input);
         searchButton = findViewById(R.id.search_user_btn);
         backButton = findViewById(R.id.back_btn);
@@ -47,6 +43,7 @@ public class SearchUserActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> {
             onBackPressed();
         });
+
         searchButton.setOnClickListener(v -> {
             String searchTerm = searchInput.getText().toString();
             if(searchTerm.isEmpty() || searchTerm.length()<3){
@@ -56,6 +53,7 @@ public class SearchUserActivity extends AppCompatActivity {
             setupSearchRecyclerView(searchTerm);
         });
     }
+
     void setupSearchRecyclerView(String searchTerm){
 
         Query query = FirebaseUtil.allUserCollectionReference()

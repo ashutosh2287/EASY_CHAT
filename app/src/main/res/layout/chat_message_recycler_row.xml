@@ -1,41 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:padding="8dp">
 
+    <!-- Sender (Other person) -->
     <LinearLayout
         android:id="@+id/left_chat_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
+        android:layout_gravity="start"
         android:background="@drawable/edit_text_rounded_corner"
         android:backgroundTint="@color/chat_color_sender"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:visibility="gone"
+        android:padding="10dp">
+
         <TextView
             android:id="@+id/left_chat_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Left"
             android:textColor="@color/white"
-            android:textSize="18sp"/>
+            android:textSize="16sp" />
+
+        <!-- Sender's Phone Number -->
+        <TextView
+            android:id="@+id/left_chat_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone" />
     </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <!-- Receiver (Current user) -->
     <LinearLayout
         android:id="@+id/right_chat_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="80dp"
+        android:layout_gravity="end"
         android:background="@drawable/edit_text_rounded_corner"
         android:backgroundTint="@color/chat_color_receiver"
-        android:padding="8dp">
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="10dp">
+
         <TextView
             android:id="@+id/right_chat_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Right"
             android:textColor="@color/white"
-            android:textSize="18sp"/>
+            android:textSize="16sp" />
+
+        <!-- Receiver's Phone Number -->
+        <TextView
+            android:id="@+id/right_chat_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone" />
     </LinearLayout>
 
-
-</RelativeLayout>
+</LinearLayout>

@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class LoginUsernameActivity extends AppCompatActivity {
 
     EditText usernameInput;
@@ -47,17 +50,21 @@ public class LoginUsernameActivity extends AppCompatActivity {
     }
 
     void setUsername(){
-
         String username = usernameInput.getText().toString();
-        if(username.isEmpty() || username.length()<3){
+        if(username.isEmpty() || username.length() < 3){
             usernameInput.setError("Username length should be at least 3 chars");
             return;
         }
         setInProgress(true);
-        if(userModel!=null){
+
+        String userId = FirebaseUtil.currentUserId();
+
+        if(userModel != null){
             userModel.setUsername(username);
-        }else
-            userModel = new UserModel(phoneNumber, username, Timestamp.now(), FirebaseUtil.currentUserId());
+            userModel.setUserId(userId); // 🛠️ Important Fix
+        } else {
+            userModel = new UserModel(phoneNumber, username, Timestamp.now(), userId);
+        }
 
         FirebaseUtil.currentUserDetails().set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -65,13 +72,13 @@ public class LoginUsernameActivity extends AppCompatActivity {
                 setInProgress(false);
                 if(task.isSuccessful()){
                     Intent intent = new Intent(LoginUsernameActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
             }
         });
-
     }
+
 
     void getUsername(){
         setInProgress(true);
@@ -80,7 +87,7 @@ public class LoginUsernameActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 setInProgress(false);
                 if(task.isSuccessful()){
-                     userModel =task.getResult().toObject(UserModel.class);
+                    userModel =    task.getResult().toObject(UserModel.class);
                     if(userModel!=null){
                         usernameInput.setText(userModel.getUsername());
                     }
