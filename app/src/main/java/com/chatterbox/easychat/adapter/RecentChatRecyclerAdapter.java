@@ -13,7 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.chatterbox.easychat.ChatActivity;
+import com.chatterbox.easychat.ProfilePicViewActivity;  // Import ProfilePicViewActivity
 import com.chatterbox.easychat.R;
 import com.chatterbox.easychat.model.ChatroomModel;
 import com.chatterbox.easychat.model.UserModel;
@@ -35,7 +37,7 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
 
     @Override
     protected void onBindViewHolder(@NonNull ChatroomModelViewHolder holder, int position, @NonNull ChatroomModel model) {
-        FirebaseUtil.getOtherUserFromChatroom(model.getUserIds())
+        Objects.requireNonNull(FirebaseUtil.getOtherUserFromChatroom(model.getUserIds()))
                 .get().addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         boolean lastMessageSentByMe = model.getLastMessageSenderId().equals(FirebaseUtil.currentUserId());
@@ -43,14 +45,28 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
                         UserModel otherUserModel = task.getResult().toObject(UserModel.class);
 
                         // Step 1: Add a check for null or empty userId
-
-
+                        assert otherUserModel != null;
                         holder.usernameText.setText(otherUserModel.getUsername());
                         if (lastMessageSentByMe)
                             holder.lastMessageText.setText("You : " + model.getLastMessage());
                         else
                             holder.lastMessageText.setText(model.getLastMessage());
                         holder.lastMessageTime.setText(FirebaseUtil.timestampToString(model.getLastMessageTimestamp()));
+
+                        // Step 2: Load profile picture using Glide
+                        Glide.with(context)
+                                .load(otherUserModel.getProfilePic())
+                                .circleCrop() // Optional, to make the profile picture circular
+                                .placeholder(R.drawable.default_profile_pic)
+                                .into(holder.profilePic);
+
+                        // Step 3: Set an OnClickListener to open ProfilePicViewActivity when the profile picture is clicked
+                        holder.profilePic.setOnClickListener(v -> {
+                            Intent intent = new Intent(context, ProfilePicViewActivity.class);
+                            intent.putExtra("imgUrl", otherUserModel.getProfilePic());  // Pass the image URL to the activity
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // Ensure it's a new task
+                            context.startActivity(intent);  // Start the activity
+                        });
 
                         holder.itemView.setOnClickListener(v -> {
                             // Navigate to chat activity

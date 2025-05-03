@@ -4,4 +4,5 @@
     <string name="developed_by_ashutosh_anand">Developed by Ashutosh Anand</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_pic_description">Profile Picture</string>
 </resources>

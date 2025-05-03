@@ -5,6 +5,8 @@ import com.chatterbox.easychat.utils.FirebaseUtil;
 import com.google.firebase.Timestamp;
 import android.content.Context;
 
+import java.util.Objects;
+
 public class UserModel {
     private String phone;
     private String username;
@@ -80,7 +82,7 @@ public class UserModel {
         this.profilePic = imageUrl; // Update profile picture URL
 
         // Update Firestore with the new profile picture URL
-        FirebaseUtil.currentUserDetails().set(this)
+        Objects.requireNonNull(FirebaseUtil.currentUserDetails()).set(this)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         AndroidUtil.showToast(context, "Profile picture updated successfully");
