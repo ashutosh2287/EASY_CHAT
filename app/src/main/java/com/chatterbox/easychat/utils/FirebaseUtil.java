@@ -24,7 +24,7 @@ public class FirebaseUtil {
     public static String currentUserId() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            return user.getUid();  // Correct way to get the UID from the FirebaseUser
+            return user.getUid();
         } else {
             Log.e("FirebaseUtil", "User not authenticated");
             return null;
@@ -94,10 +94,13 @@ public class FirebaseUtil {
         }
     }
 
-    // Converts a timestamp to a string (formatted as HH:mm)
+    // ✅ Version 1: Converts a timestamp to a string (formatted as HH:mm), returns empty if null
     public static String timestampToString(Timestamp timestamp) {
+        if (timestamp == null) return ""; // Prevents crash if timestamp is null
         return new SimpleDateFormat("HH:mm").format(timestamp.toDate());
     }
+
+
 
     // Logs out the current user
     public static void logout() {

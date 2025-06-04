@@ -40,7 +40,7 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
         Objects.requireNonNull(FirebaseUtil.getOtherUserFromChatroom(model.getUserIds()))
                 .get().addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        boolean lastMessageSentByMe = model.getLastMessageSenderId().equals(FirebaseUtil.currentUserId());
+                        boolean lastMessageSentByMe = FirebaseUtil.currentUserId().equals(model.getLastMessageSenderId());
 
                         UserModel otherUserModel = task.getResult().toObject(UserModel.class);
 
