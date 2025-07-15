@@ -44,3 +44,118 @@
 
 ## 📂 Project Structure
 
+EasyChat/
+├── activities/
+│ ├── ChatActivity.kt
+│ ├── LoginPhoneNumberActivity.kt
+│ ├── LoginOtpActivity.kt
+│ ├── LoginUsernameActivity.kt
+│ └── SearchUserActivity.kt
+├── fragments/
+│ ├── ChatFragment.kt
+│ └── ProfileFragment.kt
+├── adapters/
+│ ├── ChatRecyclerAdapter.kt
+│ ├── RecentChatRecyclerAdapter.kt
+│ └── SearchUserRecyclerAdapter.kt
+├── models/
+│ ├── UserModel.kt
+│ ├── ChatroomModel.kt
+│ └── ChatMessageModel.kt
+├── utils/
+│ ├── AndroidUtil.kt
+│ └── FirebaseUtil.kt
+├── layout/
+│ ├── *.xml (all activity + recycler row UIs)
+└── MainActivity.kt
+
+
+---
+
+## 🧭 App Flow
+
+1. **Splash Screen** → Auth check
+2. **Login** → Phone number + OTP → Username + Profile
+3. **MainActivity** → Contains Chat & Profile Fragments
+4. **SearchUserActivity** → Start chat with any user
+5. **ChatActivity** → Real-time conversation
+
+---
+
+## 🔐 Firebase Security Rules (Sample)
+
+```
+
+---
+
+## 🧭 App Flow
+
+1. **Splash Screen** → Auth check
+2. **Login** → Phone number + OTP → Username + Profile
+3. **MainActivity** → Contains Chat & Profile Fragments
+4. **SearchUserActivity** → Start chat with any user
+5. **ChatActivity** → Real-time conversation
+
+---
+
+## 🔐 Firebase Security Rules (Sample)
+
+```js
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+
+    match /chatrooms/{chatroomId} {
+      allow read, write: if request.auth.uid in resource.data.userIds;
+    }
+
+    match /messages/{messageId} {
+      allow read, write: if request.auth.uid != null;
+    }
+  }
+}
+
+
+ Key Activities and Components
+ChatActivity – Real-time message screen
+
+SearchUserActivity – Search and start chats
+
+RecentChatRecyclerAdapter – Shows latest chats efficiently
+
+FirebaseUtil.kt – Centralized Firestore/Auth handling
+
+ChatroomModel – Stores chatroomId, last message, and cached user info
+
+💡 Future Improvements
+✅ Image sharing in chat
+
+✅ Group chat support
+
+⏳ Seen/delivered indicators
+
+⏳ Delete messages
+
+⏳ Typing indicator
+
+⏳ Message encryption
+
+👨‍💻 Developer
+Ashutosh Anand
+
+LinkedIn: https://www.linkedin.com/in/ashutosh-anand-1651841b6/
+
+GitHub: https://github.com/ashutosh2287
+
+📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+🙏 Acknowledgments
+Firebase for real-time services
+
+Android Developers community for support
+
+Inspiration from WhatsApp and Signal for UI/UX patterns
